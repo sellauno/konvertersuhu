@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'input.dart';
+import 'convert.dart';
+import 'result.dart';
 
 void main() {
   runApp(MyApp());
@@ -58,107 +60,9 @@ class _MyAppState extends State<MyApp> {
               height: 50.0,
             ),
             Convert(konversiSuhu: _konversiSuhu),
-            
-           /* Column(
-              crossAxisAlignment : CrossAxisAlignment.center,
-              mainAxisAlignment : MainAxisAlignment.end,
-              mainAxisSize : MainAxisSize.max,
-              children: [
-               Align(
-                  alignment : Alignment.bottomCenter,
-                  child: Convert(konversiSuhu: _konversiSuhu),
-                ),
-              ],
-            ), */
           ],
         ),
       ),
-      ),
-    );
-  }
-}
-
-//other classes
-
-class Input extends StatelessWidget {
-  const Input({
-    Key key,
-    @required this.inputController,
-  }) : super(key: key);
-
-  final TextEditingController inputController;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: InputDecoration(hintText: "Masukkan Suhu Dalam Celcius"),
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      controller: inputController,
-      keyboardType: TextInputType.number,
-    );
-  }
-}
-
-class Convert extends StatelessWidget {
-  final Function konversiSuhu;
-
-  Convert({Key key, @required this.konversiSuhu});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Align(
-        alignment : Alignment.bottomCenter,
-        child: Container(
-          width: double.infinity,
-          height: 50,
-          child: RaisedButton(
-            onPressed: konversiSuhu,
-            color: Colors.blueAccent,
-            textColor: Colors.white,
-            child: Text("Konversi Suhu"),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class Result extends StatelessWidget{
-  final kelvin;
-  final reamur;
-
-  Result({
-    Key key,
-    @required this.kelvin, this.reamur,
-  }) : super(key: key);
-
-  Widget build(BuildContext context){
-    return Container(
-      padding: const EdgeInsets.only(top: 50),
-      child: Row(              
-        mainAxisAlignment : MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Column(
-            children: [
-              Text('Suhu dalam Kelvin'),
-              Text(
-                kelvin.toStringAsFixed(1),
-                style: TextStyle(fontSize: 20, height: 2),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Text('Suhu dalam Reamor'),
-              Text(
-                reamur.toStringAsFixed(3),
-                style: TextStyle(fontSize: 20, height: 2),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }
