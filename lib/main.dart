@@ -52,66 +52,24 @@ class _MyAppState extends State<MyApp> {
         margin: EdgeInsets.all(8),
         child: Column(
           children: [
-            TextFormField(
-              controller : inputController,
-              decoration: const InputDecoration(
-                hintText : 'Masukkan Suhu dalam Celcius',
-              ),
-              keyboardType :  TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly
-              ],
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 50),
-              child: Row(              
-                mainAxisAlignment : MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Column(
-                    children: [
-                      Text('Suhu dalam Kelvin'),
-                      Text(
-                        _kelvin.toStringAsFixed(1),
-                        style: TextStyle(fontSize: 20, height: 2),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text('Suhu dalam Reamor', 
-                       ),
-                      Text(
-                        _reamur.toStringAsFixed(3),
-                        style: TextStyle(fontSize: 20, height: 2),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            Input(inputController: inputController),
+            Result(kelvin: _kelvin, reamur: _reamur),
             Divider(
               height: 50.0,
             ),
-            Column(
+            Convert(konversiSuhu: _konversiSuhu),
+            
+           /* Column(
               crossAxisAlignment : CrossAxisAlignment.center,
               mainAxisAlignment : MainAxisAlignment.end,
               mainAxisSize : MainAxisSize.max,
               children: [
-                Container(
-                  width: double.infinity,
-                  height: 50.0,
-                  child: MaterialButton(
-                    onPressed: _konversiSuhu,
-                    color: Colors.blue,
-                    child: Text(
-                      'Konverter Suhu',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
+               Align(
+                  alignment : Alignment.bottomCenter,
+                  child: Convert(konversiSuhu: _konversiSuhu),
                 ),
               ],
-            ),
+            ), */
           ],
         ),
       ),
@@ -125,37 +83,82 @@ class _MyAppState extends State<MyApp> {
 class Input extends StatelessWidget {
   const Input({
     Key key,
-    @required this.etInput,
+    @required this.inputController,
   }) : super(key: key);
 
-  final TextEditingController etInput;
+  final TextEditingController inputController;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(hintText: "Masukkan Suhu Dalam Celcius"),
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      controller: etInput,
+      controller: inputController,
       keyboardType: TextInputType.number,
     );
   }
 }
 
 class Convert extends StatelessWidget {
-  final Function konvertHandler;
+  final Function konversiSuhu;
 
-  Convert({Key key, @required this.konvertHandler});
+  Convert({Key key, @required this.konversiSuhu});
 
   @override
   Widget build(BuildContext context) {
+    return Expanded(
+      child: Align(
+        alignment : Alignment.bottomCenter,
+        child: Container(
+          width: double.infinity,
+          height: 50,
+          child: RaisedButton(
+            onPressed: konversiSuhu,
+            color: Colors.blueAccent,
+            textColor: Colors.white,
+            child: Text("Konversi Suhu"),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Result extends StatelessWidget{
+  final kelvin;
+  final reamur;
+
+  Result({
+    Key key,
+    @required this.kelvin, this.reamur,
+  }) : super(key: key);
+
+  Widget build(BuildContext context){
     return Container(
-      width: double.infinity,
-      height: 50,
-      child: RaisedButton(
-        onPressed: konvertHandler,
-        color: Colors.blueAccent,
-        textColor: Colors.white,
-        child: Text("Konversi Suhu"),
+      padding: const EdgeInsets.only(top: 50),
+      child: Row(              
+        mainAxisAlignment : MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Column(
+            children: [
+              Text('Suhu dalam Kelvin'),
+              Text(
+                kelvin.toStringAsFixed(1),
+                style: TextStyle(fontSize: 20, height: 2),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              Text('Suhu dalam Reamor'),
+              Text(
+                reamur.toStringAsFixed(3),
+                style: TextStyle(fontSize: 20, height: 2),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
